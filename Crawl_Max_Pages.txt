@@ -1,0 +1,5 @@
+def crawl_web(seed, max_pages):
+	tocrawl = [seed]
+	crawled = [] #len(crawled) is the length of craweld
+	while to crawl:
+		

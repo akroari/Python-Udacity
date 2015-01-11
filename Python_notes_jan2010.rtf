@@ -1,0 +1,970 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10900\viewh9340\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs26 \cf0 Regular expressions\
+
+\b0 powerful, dense. take your time and don't get too frustrated\
+search for patterns in a text. This is so powerful. study it!!\
+\
+\
+import re\
+re.search(pat, text) # pattern, text\
+#this returns a match object\
+match = re.search('iig', 'called pig') # the simplest case\
+>>> match = re.search('iig', 'called piiig')\
+>>> match.group()\
+#we define a def function that takes an argument of pattern, text\
+\
+>>> def find(pat, text):\
+	match = re.search(pat, text)\
+	if match: print match.group()\
+	else: print 'not found'\
+
+\b \
+
+\b0 special characters, match \'85g\
+>>> find('...g', 'piiig')\
+iiig\
+\
+regular expression engine is smart. will backtrack. left to right until satisfied\
+raw string. use r to tell python to dismiss specialness of raw sting. \
+
+\b \
+\
+setting path environment variable?? (.cshrc, .kshrc)\
+Q:\
+path\
+PYTHONPATH\
+tkinter\
+
+\b0 and other configuration commands. where do files live etc....
+\b \
+\
+Unix executable scripts:
+\b0 \
+*first line is special - tells the system where the interpreter lives\
+#!/usr/bin/python\
+*Usually have executable priviledges:\
+\
+
+\i Q: how should my files be setup with python?
+\i0 \
+\
+
+\b Module basics and reloads
+\b0 \
+-python source code ending in .py is a module (technically)\
+-modules serve the role of libraries of tools. \
+-A module is generally a package of variable names, called namespace\
+
+\i Q: how to setup the path in idle appropriately?
+\i0 \
+\
+-import a module in terminal by:\
+>>> import mfile\
+>>> print mfile.title\
+the meaning\
+\
+this is 
+\b object.attribute\
+
+\b0 OR\
+\
+>>> from mfile import title\
+>>> print title\
+the meaning\
+\
+
+\b example:
+\b0 \
+a = 'dead'\
+b = 'parrot'\
+c = 'sketch'\
+print a,b,c\
+\
+>>> from threenames import a,b,c\
+>>> print a,b,c\
+dead parrot sketch\
+OR...you can do it this way:\
+>>> import threenames\
+>>> print threenames.a\
+dead\
+\
+
+\b Using the built in directory function - handy!
+\b0 \
+>>> dir(threenames)\
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'a', 'b', 'c']\
+\
+-names with leading & trailing underscores are built in names in python\
+\
+*note: python programs are typically composed of module files linked together by import statements. Each module file is a self-contained namespace the names in one file cannot clash with names in another.\
+
+\b a namespace is an object with attributes!
+\b0 \
+\
+
+\b Frozen binary executables:
+\b0 \
+packages that combine your programs byte code and the Python interpreter into a single executable program\
+\
+
+\b Import and reload usage notes:
+\b0 \
+\
+Programs are composed of modules\
+modules contain statements\
+statements contain expressions\
+expressions create and process objects\
+\
+objects=data structures\
+\
+
+\b core data types:
+\b0 \
+Numbers\
+Strings\
+Lists\
+Dictionaries\
+Tuples\
+Files\
+Other Types - boolean, sets, types, none\
+\
+-an expression in square brackets makes a list\
+-curly braces makes a dictionary\
+-parentheses makes a tuple?\
+*dictionaries store objects by key\
+*lists provide ordered collections of other types\
+\
+
+\b Numbers:\
+>>> random.random()\
+0.29719939624920744\
+\
+>>> random.choice([1,3,5,9])\
+5\
+>>> random.choice([1,3,5,9])\
+3\
+>>> random.choice([1,3,5,9])\
+1\
+\
+Sequence Operations:\
+
+\b0 >>> S='Spam'\
+>>> len(S)\
+4\
+>>> S[0]\
+'S'\
+>>> S[2]\
+'a'\
+>>> S[-3]\
+'p'\
+>>> S[1:3]\
+'pa'\
+>>> S*8\
+'SpamSpamSpamSpamSpamSpamSpamySpam'\
+\
+\
+
+\b Immutability:\
+
+\b0 core data types are immutable. So are strings. But python cleans up old objects if you rename\
+\
+
+\b Type-Specific Methods:\
+
+\b0 >>> S.find('pa')\
+1\
+>>> S.find('m')\
+3
+\b \
+
+\b0 >>> S.replace('pa', 'arisamuel')			#good one\
+'Sarisamuelm'\
+\
+>>> line='aaa,bbb,ccc,dddddd'\
+>>> line.split(',')\
+['aaa', 'bbb', 'ccc', 'dddddd']\
+\
+HELP:\
+methods are a function of attributes\
+def(var)\
+dir(x)\
+['__abs__', '__add__', '__and__', '__class__', '__cmp__', '__coerce__', '__delattr__', '__div__', '__divmod__', '__doc__', '__float__', '__floordiv__', '__format__', '__getattribute__', '__getnewargs__', '__hash__', '__hex__', '__index__', '__init__', '__int__', '__invert__', '__long__', '__lshift__', '__mod__', '__mul__', '__neg__', '__new__', '__nonzero__', '__oct__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdiv__',\
+\
+dir(S)\
+['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof\
+\
+
+\b Pattern Matching (briefly)
+\b0 \
+>>> import re\
+>>> match = re.match('Hello[ \\t]*(.*)world', 'Hello Python world')\
+>>> match.group(1)\
+'Python '\
+>>> match = re.match('/(.*)/(.*)/(.*)','/usr/home/lumberjack')\
+>>> match.groups()\
+('usr', 'home', 'lumberjack')\
+\
+
+\b Lists\
+
+\b0 >>> L= [123, 'spam', '1.23']\
+\
+get length\
+>>> len(L)\
+3\
+get value at a position\
+>>> L[0]\
+123\
+\
+add to list:\
+>>> L + [4,5,6]\
+[123, 'spam', '1.23', 4, 5, 6]\
+\
+growing a list:\
+>>> L.append('NI')\
+>>> L\
+[123, 'spam', '1.23', 'NI']\
+\
+
+\b Nesting:
+\b0 \
+a list within a list\
+>>> M=[[1,2,3],[4,5,6],[7,8,9]]\
+>>> M\
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]\
+>>> M[1]\
+[4, 5, 6]\
+>>> M[2][2]\
+9\
+\
+
+\b List Comprehensions
+\b0 \
+get NumPy\
+\
+>>> M=[[1,2,3],[4,5,6],[7,8,9]]\
+>>> col2 = [row[1] for row in M]		\
+>>> col2\
+[2, 5, 8]\
+>>> M\
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]			#matrix is unchanged\
+\
+>>> [row[1] for row in M if row[1] % 2==0]`#filter odds - clever\
+[2, 8]\
+\
+[3, 6, 9]\
+>>> [row[2] + 1 for row in M]\
+[4, 7, 10]\
+>>> [row[0] + 1 for row in M]		#add 1 to each item in column 0\
+[2, 5, 8]\
+\
+
+\b Dictionaries\
+
+\b0 dictionaries are not sequences but rather mappings\
+still collections of other objects, but of key rather than of relative position\
+\
+mapping operations:\
+>>> D = \{'food': 'Spam', 'quantity': 4, 'color': 'pink'\}\
+#we access by key NOT by position:\
+>>> D['color']\
+'pink'\
+>>> D['color']\
+'pink'\
+>>> D['quantity']\
+4\
+\
+We can perform operations on these as before\
+>>> D['quantity']+=1\
+>>> D['quantity']\
+5\
+\
+It's more common to fill one key at a time such as:\
+>>> D['name']='Ari'\
+>>> D['job']='Researcher'\
+>>> D['age']=32\
+>>> print D['name']\
+Ari\
+\
+...imagine this is useful in working with databases such as sql - find out later\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1\fs24 \cf0 \'a0 ## Can build up a dict by starting with the the empty dict \{\}\
+\'a0 ## and storing key/value pairs into the dict like this:\
+\'a0 ## dict[key] = value-for-that-key\
+\'a0 dict = \{\}\
+\'a0 dict['a'] = 'alpha'\
+\'a0 dict['g'] = 'gamma'\
+\'a0 dict['o'] = 'omega'\
+\
+\'a0 print dict \'a0## \{'a': 'alpha', 'o': 'omega', 'g': 'gamma'\}\
+\
+\'a0 print dict['a'] \'a0 \'a0 ## Simple lookup, returns 'alpha'\
+\'a0 dict['a'] = 6 \'a0 \'a0 \'a0 ## Put new key/value into dict\
+\'a0 'a' in dict \'a0 \'a0 \'a0 \'a0 ## True\
+\'a0 ## print dict['z'] \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0## Throws KeyError\
+\'a0 if 'z' in dict: print dict['z'] \'a0 \'a0 ## Avoid KeyError\
+\'a0 print dict.get('z') \'a0## None (instead of KeyError)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1\fs24 \cf0 ## By default, iterating over a dict iterates over its keys.\
+\'a0 ## Note that the keys are in a random order.\
+\'a0 for key in dict: print key\
+\'a0 ## prints a g o\
+\'a0 \
+\'a0 ## Exactly the same as above\
+\'a0 for key in dict.keys(): print key\
+\
+\'a0 ## Get the .keys() list:\
+\'a0 print dict.keys() \'a0## ['a', 'o', 'g']\
+\
+\'a0 ## Likewise, there's a .values() list of values\
+\'a0 print dict.values() \'a0## ['alpha', 'omega', 'gamma']\
+\
+\'a0 ## Common case -- loop over the keys in sorted order,\
+\'a0 ## accessing each key/value\
+\'a0 for key in sorted(dict.keys()):\
+\'a0 \'a0 print key, dict[key]\
+\'a0 \
+\'a0 ## .items() is the dict expressed as (key, value) tuples\
+\'a0 print dict.items() \'a0## \'a0[('a', 'alpha'), ('o', 'omega'), ('g', 'gamma')]\
+\
+\'a0 ## This loop syntax accesses the whole dict by looping\
+\'a0 ## over the .items() tuple list, accessing one (key, value)\
+\'a0 ## pair on each iteration.\
+\'a0 for k, v in dict.items(): print k, '>', v\
+\'a0 ## a > alpha \'a0 \'a0o > omega \'a0 \'a0 g > gamma\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf0 \
+\
+
+\b Nesting Revisited:\
+
+\b0 >>> rec= \{'name':\{'first':'bob', 'last': 'smith'\}, 'job':['researcher','inventor'], 'age':32\}\
+>>> rec\
+\{'age': 32, 'job': ['researcher', 'inventor'], 'name': \{'last': 'smith', 'first': 'bob'\}\}\
+>>> rec['name']\
+\{'last': 'smith', 'first': 'bob'\}\
+>>> rec['job'][-1]\
+'inventor'\
+>>> rec['job'][0]\
+'researcher'\
+\
+>>> rec['job'].append('trash guy')			#expand the description\
+>>> rec['job']\
+['researcher', 'inventor', 'trash guy']\
+
+\b \
+
+\b0 Python has 
+\i garbage collection 
+\i0 that will automatically clean up unused memory\
+\
+how then do we sort a dictionary since it is not ordered by sequence?\
+\
+common method is as follows:\
+\
+>>> for key in Ks:\
+	print key, '=>', D[key]\
+\
+a => 1\
+c => 3\
+b => 2\
+\
+>>> for c in 'spam':\
+	print c.upper()\
+\
+S\
+P\
+A\
+M\
+\
+
+\b iteration and optimization\
+
+\b0 a simple way to square values in a list:
+\b \
+
+\b0 >>> squares = [x**2 for x in [1,2,3,4,5,6]]\
+>>> squares\
+[1, 4, 9, 16, 25, 36]\
+\
+we can also do it this way:\
+>>> squares = []\
+>>> for x in [1,2,3,4,5,6]: squares.append(x**2)\
+\
+>>> squares\
+[1, 4, 9, 16, 25, 36]\
+\
+
+\b Tuples\
+
+\b0 a list that cannot be changed\
+-tuples are sequences like lists but immutable like strings\
+-encode in () \
+\
+>>> Tuple = (1,2,3,4,5)\
+Tuple\
+>>> len(Tuple)\
+5
+\b \
+
+\b0 >>> Tuple + (5,6)\
+(1, 2, 3, 4, 5, 5, 6)\
+>>> Tuple[0]\
+1\
+\
+
+\b Files\
+
+\b0 write files as follows:\
+
+\b >>> f= open('data.txt', 'w')	#make a new file in output mode
+\b0 \
+>>> f.write('hi\\n')\
+>>> f.write('ari\\n')\
+>>> f.close()\
+>>> f=open('data.txt', 'w')\
+\
+
+\b >>> f=open('data.txt')
+\b0 \
+>>> bytes=f.read()\
+>>> bytes\
+'ari will learn to program by the end of this week'\
+>>> print bytes\
+ari will learn to program by the end of this week\
+>>> bytes.split()\
+['ari', 'will', 'learn', 'to', 'program', 'by', 'the', 'end', 'of', 'this', 'week']\
+\
+>>> dir(file)\
+['__class__', '__delattr__', '__doc__', '__enter__', '__exit__', '__getattribute__', '__hash__', '__init__', '__iter__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__str__', 'close', 'closed', 'encoding', 'fileno', 'flush', 'isatty', 'mode', 'name', 'newlines', 'next', 'read', 'readinto', 'readline', 'readlines', 'seek', 'softspace', 'tell', 'truncate', 'write', 'writelines', 'xreadlines']\
+\
+the 
+\b open 
+\b0 function is the workhorse of most file processing you'll do in python\
+\
+
+\b other core types\
+
+\b0 sets\
+>>> X=set('spam')\
+>>> Y=set(['h','a','m'])\
+>>> X,Y\
+(set(['a', 'p', 's', 'm']), set(['a', 'h', 'm']))\
+>>> X&Y\
+set(['a', 'm'])\
+>>> X|Y\
+set(['a', 'p', 's', 'h', 'm'])\
+>>> X-Y\
+set(['p', 's'])\
+\
+polymorphism is the key to working well in python:\
+that is, python supports object operations supported rather than object types\
+this is a key idea...\
+\
+
+\b User defined classes\
+
+\b0 classes define new types of objects that extend the core set.\
+\
+an example:\
+\
+>>> class Worker:\
+	def __init__(self, name, pay):			#initialize when created\
+		
+\b self
+\b0 .name = name				#self is a 
+\b new object
+\b0 \
+		self.pay = pay\
+		def lastName(self):\
+			return self.name.split()[-1]		#split string on blanks\
+		def giveRaise(self, percent):\
+			self.pay *= (1.0+percent)		#update pay in place\
+\
+this class defines a new kind of object that will have name and pay attributes (called 
+\i state information
+\i0 ). This object will have two bits of behavior coded as functions - 
+\i methods. 
+\i0 Calling the class like a function generates instances of our new type and the class' methods automatically receive the instance being processed  by a given method call.\
+\
+>>> sue=Worker('sue jones', 60000)\
+>>> bob.lastName()\
+---get a strange error to be explored later on??\
+\
+note that objects need not be 
+\i object oriented
+\i0 , that requires injeritance and the python 
+\i class 
+\i0 statement\
+\
+Check out NumPy!\
+\
+
+\b Numbers\
+
+\b0 expressions:\
+(...), [...], \{...\}, 			tuple, list, dictionary,\
+mixed types are converted up\
+\
+Operator overloading:\
+
+\b polymorphism
+\b0  - the meaning of an operation depends on the 
+\i type
+\i0  of objects being operated on\
+\
+Variables and basic expressions:\
+-Variables are created when they are first assigned values\
+-Vars are replaced with their values when used in expressions\
+-vars must be assigned before they can be used in expressions\
+-vars refer to objects and are never declared ahead of time\
+\
+>>> a+b, 2.0+b\
+(7, 6.0)\
+				#we get back a tuple since the colon separates 2 expressions\
+\
+
+\b numeric display formats
+\b0 \
+str()		#convert to string\
+\
+
+\b Bitwise operations:\
+
+\b0 >>> x=1			#0001\
+>>> x<<2			#shift left 2 bits: 0100\
+4\
+>>> x | 2			#bitwise OR: 0011\
+3\
+>>> x&1			#bitwise AND: 0001\
+1\
+The above is not very important\
+\
+
+\b Complex numbers:\
+
+\b0 represent as 2 floating point numbers\
+import cmath module\
+\
+
+\b hexadecimal and octal notation - skip for now. back later if needed\
+\
+Other built in numeric tools:\
+
+\b0 >>> math.pi, math.e\
+(3.1415926535897931, 2.7182818284590451)\
+>>> math.sin(2*math.pi/180)\
+0.034899496702500969\
+>>> math.sqrt(144), math.sqrt(2)\
+(12.0, 1.4142135623730951)\
+>>> abs(-42), 2**4, pow(2,4)\
+(42, 16, 16)\
+>>> int(2.567), round(2.567), round(2.567, 2)\
+(2, 3.0, 2.5699999999999998)\
+>>> print round(2.567, 2)\
+2.57\
+>>> import random\
+>>> random.random()\
+0.20733792071207768\
+>>> random.randint(1, 10)\
+3\
+>>> random.choice(['life of brian', 'holy', 'meaning'])\
+'holy'\
+from decimal import Decimal\
+>>> Decimal('0.1') - Decimal('0.1')\
+Decimal("0.0")\
+\
+
+\b Sets\
+
+\b0 >>> x=set('abcde')\
+>>> y=set('fghij)\
+\
+set(['a', 'c', 'b', 'e', 'd'])\
+>>> 'e' in x\
+>>> x|y\
+set(['a', 'c', 'b', 'e', 'd', 'g', 'f', 'i', 'h', 'j'])\
+>>> x&y\
+set([])\
+\
+>>> engineers & managers\
+set([])\
+>>> engineers | managers\
+set(['vic', 'sue', 'ann', 'cat', 'tom', 'ari', 'bob', 'rue'])\
+\
+
+\b booleans\
+
+\b0 true and false behave as 1 and 0\
+useful since now infinite loops can be coded as:\
+'while true' instead of as 'while 1'\
+note: TRUE + 1 = 4\
+\
+
+\b Shared Ref and in-place changes
+\b0 \
+>>> L1=[2,3,4]\
+>>> L1[1]\
+3\
+>>> L1[1]=24\
+>>> L1[1]\
+24\
+\
+-Get ref count for an object\
+>>> import sys\
+>>> sys.getrefcount(1)\
+803\
+\
+Dynamic typing:\
+This is the root of polymorphism in python\
+-provides code tha tauto adapts to new requirements as your systems evolve\
+\
+
+\b Strings\
+
+\b0 -immutable sequences: means they have a left-right positional order that cannot be changed\
+Pay attn: to sequence operations\
+\
+-escape sequences represent special bytes\
+>>> s='nar'\
+>>> len(s)\
+3\
+\
+>>> print '______...more...___'\
+______...more...___\
+>>> print '-'*80\
+--------------------------------------------------------------------------------\
+\
+Indexing and Slicing\
+slicing is a form of parsing\
+\
+indexing (S[i]) fetches components at offsets:\
+\
+Slicing (S[i]) extracts contiguous sections of a sequence:\
+\
+>>> s="sliceofspam"\
+>>> s[:-1]\
+'sliceofspa'\
+>>> s[::-1]\
+'mapsfoecils'\
+\
+three-limit-slices\
+\
+
+\b tuple\
+
+\b0 a collection of other objects that cannot be changed\
+-positionally ordered. can embed any kind of object\
+-accessed by offset (bot by key). can be sliced and indexed\
+-are immutable like strings\
+-fixed length, heterogenous and nestable\
+-think of them as object reference arrays\
+\
+>>> T=('cc','aa','dd','bb')\
+>>> T\
+('cc', 'aa', 'dd', 'bb')\
+>>> tmp = list(T)\
+>>> tmp\
+['cc', 'aa', 'dd', 'bb']\
+>>> tmp.sort()\
+>>> tmp\
+['aa', 'bb', 'cc', 'dd']\
+>>> T=tuple(tmp)\
+>>> T\
+('aa', 'bb', 'cc', 'dd')\
+>>> T=(1,2,3,4,5)\
+>>> L=[x+20 for x in T]\
+>>> L\
+[21, 22, 23, 24, 25]\
+\
+
+\b files\
+
+\b0 open function creates a python file object\
+***key\
+>>> myfile = open('myfile')\
+>>> myfile.readline()\
+''\
+>>> myfile = open('myfile', 'w')\
+>>> myfile.write('hello text file\\n')\
+>>> myfile.close()\
+>>> myfile = open('myfile')\
+>>> myfile.readline()\
+'hello text file\\n'
+\b \
+
+\b0 \
+>>> X,Y,Z = 43, 44, 45\
+>>> S = 'Spam'\
+>>> D = \{'a':1, 'b':2\}\
+>>> L=[1,2,3]\
+>>> \
+>>> F=open('datafile.txt', 'w')\
+>>> F.write(S+'\\n')\
+>>> F.write('%s,%s,%s\\n' % (X,Y,Z))\
+>>> F.write(str(L)+'$'+str(D)+'\\n')\
+>>> F.close()\
+>>> \
+>>> bytes=open('datafile.txt').read()\
+>>> bytes\
+"Spam\\n43,44,45\\n[1, 2, 3]$\{'a': 1, 'b': 2\}\\n"\
+>>> print bytes\
+Spam\
+43,44,45\
+[1, 2, 3]$\{'a': 1, 'b': 2\}\
+\
+>>> F=open('datafile.txt')\
+>>> line=F.readline()\
+>>> line\
+'Spam\\n'\
+>>> 'Spam\\n'\
+'Spam\\n'\
+>>> line.rstrip()\
+'Spam'\
+\
+Storing native python objects with pickle\
+\
+>>> F=open('datafile.txt', 'w')\
+>>> import pickle\
+>>> pickle.dump(D,F)\
+>>> F.close()\
+>>> F=open(;datafile.txt')\
+       \
+SyntaxError: invalid syntax\
+>>> F=open('datafile.txt')\
+>>> E=pickle.load(F)\
+>>> E\
+\{'a': 1, 'b': 2\}\
+\
+pickle module performs object serialization\
+object classification table:\
+
+\b obj type	category	mutable?
+\b0 \
+numbers	numeric	no\
+strings	sequence	no\
+lists		sequence	no\
+tuple		sequence	no\
+dictionary	mapping	yes\
+files		extension	N/A\
+\
+lists, dictionaries, tuples can hold any kind of object\
+lists, dictionaries, tuples can be arbitrarily nested\
+lists and dictionaries can dynamically grow and shrink\
+\
+>>> X=[1,2,3]\
+>>> L=['a',X,'b']\
+>>> D=\{'x':X,'y':2\}\
+\
+
+\b #11, p198
+\b0 \
+>>> test=open('test', 'w')\
+>>> testfile=open('testfile','w')\
+>>> testfile.write('hello text, this is ari, your supervisor\\n')\
+>>> testfile.close()\
+>>> testfile=open('testfile')\
+>>> testfile.readline()\
+'hello text, this is ari, your supervisor\\n'\
+\
+>>> testfile = open('testfile')\
+>>> testfile=('testfile.txt')\
+>>> #File: maker.py\
+... file=open('testfile.txt', 'w')\
+>>> file.write('this is a test\\n')\
+>>> file.close()\
+>>> file=open('testfile.txt')\
+>>> print file.read\
+<built-in method read of file object at 0x6e930>\
+>>> print file.read()\
+this is a test\
+\
+#create a dictionary of personal info: number 10 on p.198\
+\{'phone': 4159026171L, 'age': 32, 'looks': 'hot', 'income': 'low'\}\
+>>> ariInfo['age']\
+32\
+\
+WRITE A CLASSIC READ/EVAL/PRINT LOOP PROGRAM\
+\
+Error handling with 'try' statement\
+\
+
+\b Sort: Algorithms
+\b0 \
+\
+>>> def InsertionSort(A):\
+    for j in range(1, len(A)):\
+        key = A[j]\
+        i = j - 1\
+        while (i >=0) and (A[i] > key):\
+            A[i+1] = A[i]\
+            i = i - 1\
+        A[i+1] = key\
+\
+        \
+>>> x=[2,7,3,8,1]\
+>>> InsertionSort(x)\
+>>> x\
+[1, 2, 3, 7, 8]\
+>>> \
+\
+scalars are passed by value, whereas arrays are passed by reference.\
+\
+\
+'range' is commonly used in for loops:\
+assignment statements\
+>>> red, green, blue = range(3)\
+>>> red\
+0\
+>>> blue\
+2\
+>>> red, blue\
+(0, 2)\
+\
+an interesting algorithm\
+>>> L=[1,2,3,4]\
+>>> while L:\
+	front, L= L[0],L[1:]\
+	print front, L\
+\
+	\
+1 [2, 3, 4]\
+2 [3, 4]\
+3 [4]\
+4 []\
+\
+
+\b create a text file
+\b0 \
+>>> log = open('log.txt', 'w')\
+>>> print >> log, 'pace', 'time', 'effort'\
+>>> print >> log, ('mrp', 100, 5)\
+>>> log.close()\
+>>> print (open('log.txt').read()\
+\
+simple if statement:\
+>>> x = 'killer rabbit'\
+>>> if x == 'roger':\
+...     print "how's jessica"\
+... elif x == 'bugs':\
+...     print "what's up doc?"\
+... else:\
+...     print 'run away! run away'\
+... \
+run away! run away\
+\
+using dictionaries as multi-way branches\
+>>> choice='ham'\
+>>> print \{'spam': 1.25,'ham': 1.99, 'carrot': .99\}[choice]\
+1.99\
+\
+note that dictionary values are called lambda's\
+>>> branch = \{'spam': 1.25, 'ham': 1.99, 'eggs': 0.99\}\
+>>> print branch.get('spam', 'Bad choice')\
+1.25\
+>>> print branch.get('bacon', 'Bad choice')\
+Bad choice\
+\
+
+\b block structure
+\b0 \
+x=1\
+if x:\
+    y=2\
+    if y:\
+        print 'block2'\
+    print 'block1'\
+print 'block0'\
+\
+logical tests:\
+>>> 2 and 3, 3 and 2	#eval from left to right. return left operand if false\
+(3, 2)				#else return right operand (true or false)\
+>>> 3 and 2\
+2\
+>>> 2 and 3\
+3\
+\
+
+\b if/else ternary expression
+\b0 \
+>>> A='t' if 'spam' else 'f'\
+>>> A\
+'t'\
+>>> A='t' if '' else 'f'\
+>>> A\
+'f'\
+\
+#loop over a list \
+for var in list\
+print var\
+\
+#find if a value is in a list\
+value in list\
+\
+#sorting lists\
+sorted(a) #very cool\
+sorted(a, reverse=True) #reverse the direction\
+\
+#custom sorting - VERY IMPORTANT, powerful\
+a = ['ccc', 'aaaa', 'd', 'bb']\
+#key argument, build a list based on length function to sort by length\
+sorted(a, key=len)\
+\
+#a custom sort. we want to sort by last character \
+#so if we have \
+a = ['ccc', 'aaaz', 'd', 'bb']\
+#define a new function that returns the last character for each value in a list, the [-1].\
+def Last(s): return s[-1]\
+#now use this as the key for the sorting criteria\
+sorted(a, key=Last)\
+\
+#make a string out of a list\
+#use the built-in and concatenate in one step. VERY powerful and profound technique\
+'\\n'.join(a)\
+#in words, new line, join a. The output is,\
+'ccc\\naaaz\\ndd\\nbb'\
+\
+#go in the other direction\
+>>> b.split(':')\
+['ccc', 'aaaz', 'dd', 'bb']\
+\
+#another powerful technique for putting certain results into a new list. Shit! play with this more. Below all values in the list added, but this should be very flexible \
+>>> a\
+['ccc', 'aaaz', 'dd', 'bb']\
+>>> result = []\
+>>> for s in a: result.append(s)\
+#display results\
+>>> result\
+['ccc', 'aaaz', 'dd', 'bb']\
+\
+#count over numbers. use the options for range to make any permutations needed\
+#do not permutate when looping over a list. weird infinite loops and etc. \
+>>> range(20)\
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]\
+\
+#tuple is immutable. Tuple is good for url and score, OR x,y,z, etc. Lock fixed number of #things together\
+#list can grow and shrink\
+#tuples and strings are immutable. \
+\
+>>> a = [(1, "b"), (2, "a"), (1, 'a')]\
+>>> sorted(a)\
+[(1, 'a'), (1, 'b'), (2, 'a')]\
+\
+#parallel assignement\
+>>> (x,y) = (1,2)\
+>>> x\
+1\
+>>> y\
+2}

@@ -1,0 +1,8 @@
+DaysInWeek = 7
+HoursInDay = 24 
+MinInHour = 60
+NumWeeks = 7
+
+MinWeek = DaysInWeek*HoursInDay*MinInHour*NumWeeks
+
+print MinWeek
